@@ -42,6 +42,8 @@ const Login = () => {
       // ✅ OPTIONAL: SAVE USER INFO
       localStorage.setItem("user", JSON.stringify(data.user));
 
+      window.dispatchEvent(new Event("authChange"));
+
       // ✅ REDIRECT TO PROTECTED PAGE
       navigate("/dashboard");
 

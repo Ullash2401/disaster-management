@@ -4,6 +4,9 @@
   align-items: center;
   padding: 15px 40px;
   background-color: #0f172a;
+  position: relative;      /* ADDED: reference for dropdown */
+  overflow: visible;       /* ADDED: ensure dropdown isn't cut off */
+  z-index: 10;             /* optional: keep navbar on top */
 }
 
 .logo {
@@ -29,4 +32,54 @@
   border-radius: 5px;
   color: #000;
   font-weight: bold;
+}
+
+/* PROFILE DROPDOWN */
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;            /* make it visible on dark navbar */
+  padding: 5px 10px;       /* increase click area */
+  border-radius: 4px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;               /* slightly below the button */
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 160px;             /* slightly wider */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;           /* HIGHER so it appears above everything */
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+  padding: 10px 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+  background-color: #f2f2f2;
+}
+
+.logout-btn {
+  color: red;
+  font-weight: 500;
 }
