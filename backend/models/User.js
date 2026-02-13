@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    // NEW: token used for password reset
+    resetToken: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );

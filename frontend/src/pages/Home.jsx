@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import "../styles/home.css"
 
 const Home = () => {
@@ -20,7 +21,8 @@ const Home = () => {
         </p>
 
         <div className="actions">
-          <a href="/signup" className="btn-primary">Get Started</a>
+          {/* Updated to go to /choice */}
+          <Link to="/choice" className="btn-primary">Get Started</Link>
           <a href="/about" className="btn-secondary">About Us</a>
         </div>
 

@@ -7,14 +7,15 @@ const authRoutes = require("./routes/auth");
 
 const app = express();
 
-// Middlewares
-app.use(cors());
+// -------------------- MIDDLEWARE --------------------
+// Enable CORS specifically for frontend port 5173
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 
-// Routes
+// -------------------- ROUTES --------------------
 app.use("/api/auth", authRoutes);
 
-// MongoDB Connection
+// -------------------- MONGODB CONNECTION --------------------
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
@@ -23,13 +24,7 @@ mongoose
     process.exit(1);
   });
 
-// Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(` Server running on port ${PORT}`);
-});
-
-
+// -------------------- TEST ROUTE --------------------
 app.get("/add-test", async (req, res) => {
   try {
     const test = mongoose.connection.db.collection("testCollection");
@@ -38,4 +33,10 @@ app.get("/add-test", async (req, res) => {
   } catch (err) {
     res.status(500).send("Error inserting: " + err.message);
   }
+});
+
+// -------------------- START SERVER --------------------
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

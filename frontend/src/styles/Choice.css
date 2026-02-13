@@ -1,0 +1,99 @@
+/* PAGE BACKGROUND */
+.choice-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  padding: 20px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* MAIN CARD */
+.choice-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* TITLE */
+.choice-card h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.choice-card p {
+  color: #475569;
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+
+/* OPTIONS CONTAINER */
+.choice-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* OPTION CARD */
+.choice-option {
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 30px 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+  background: #f9fafb;
+}
+
+.choice-option:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  border-color: #38bdf8;
+  background: #ffffff;
+}
+
+/* ICON */
+.choice-option .icon {
+  font-size: 2.4rem;
+  margin-bottom: 15px;
+}
+
+/* OPTION TITLE */
+.choice-option h3 {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+/* OPTION DESCRIPTION */
+.choice-option span {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+/* LOGIN HIGHLIGHT */
+.choice-option.login {
+  border-color: #38bdf8;
+}
+
+.choice-option.login h3 {
+  color: #0284c7;
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .choice-options {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-card {
+    padding: 30px 20px;
+  }
+}
