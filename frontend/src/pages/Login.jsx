@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
+import "../styles/login.css";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -45,22 +42,19 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-purple-400 via-pink-300 to-yellow-200 animate-gradient-xy">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md hover:shadow-3xl transition-shadow duration-500"
-      >
-        <h2 className="text-4xl font-extrabold text-center mb-8 text-gray-800">
-          Welcome Back
-        </h2>
+    <div className="login-root">
+      {/* Overlay */}
+      <div className="login-overlay"></div>
 
-        {error && (
-          <p className="text-red-600 text-sm mb-4 text-center">{error}</p>
-        )}
+      {/* Glass card */}
+      <form onSubmit={handleSubmit} className="login-card">
+        <h2 className="login-title">Welcome Back</h2>
+
+        {error && <p className="login-error">{error}</p>}
 
         {/* Email Input */}
-        <div className="relative mb-4">
-          <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
+        <div className="login-input-wrapper">
+          <FaEnvelope className="login-icon" />
           <input
             type="email"
             name="email"
@@ -68,13 +62,13 @@ const Login = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full pl-10 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+            className="login-input"
           />
         </div>
 
         {/* Password Input */}
-        <div className="relative mb-4">
-          <FaLock className="absolute left-3 top-3 text-gray-400" />
+        <div className="login-input-wrapper">
+          <FaLock className="login-icon" />
           <input
             type="password"
             name="password"
@@ -82,37 +76,27 @@ const Login = () => {
             required
             value={formData.password}
             onChange={handleChange}
-            className="w-full pl-10 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+            className="login-input"
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all mb-4"
-        >
+        <button type="submit" disabled={loading} className="login-btn">
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* OR Separator */}
-        <div className="flex items-center my-4">
-          <hr className="flex-1 border-gray-300" />
-          <span className="mx-2 text-gray-500 font-medium">OR</span>
-          <hr className="flex-1 border-gray-300" />
+        <div className="login-or">
+          <hr />
+          <span>OR</span>
+          <hr />
         </div>
 
-        {/* Signup Button */}
-        <Link
-          to="/signup"
-          className="w-full block text-center bg-green-400 py-3 rounded-xl font-semibold text-white hover:bg-green-500 transition-all mb-4"
-        >
+        <Link to="/signup" className="signup-btn">
           Sign Up
         </Link>
 
-        {/* Forgot Password */}
-        <p className="text-sm text-gray-600 text-center mt-2">
+        <p className="forgot-password">
           Forgot your password?{" "}
-          <Link to="/forgot" className="text-purple-600 font-medium hover:underline">
+          <Link to="/forgot" className="forgot-link">
             Reset here
           </Link>
         </p>

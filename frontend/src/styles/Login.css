@@ -1,0 +1,84 @@
+/* Root with background */
+.login-root {
+  @apply relative min-h-screen flex items-center justify-center text-white;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Overlay matching Home brightness */
+.login-overlay {
+  @apply absolute inset-0 bg-emerald-900/60;
+}
+
+/* Glass card */
+.login-card {
+  @apply relative z-10 w-full max-w-md
+         px-10 py-12 rounded-3xl
+         bg-white/10 backdrop-blur-lg
+         shadow-2xl text-center;
+}
+
+/* Title */
+.login-title {
+  @apply text-5xl font-extrabold text-white mb-8;
+}
+
+/* Error */
+.login-error {
+  @apply text-red-500 text-sm mb-4;
+}
+
+/* Input wrapper */
+.login-input-wrapper {
+  @apply relative mb-4;
+}
+
+/* Icons: darker so visible */
+.login-icon {
+  @apply absolute left-3 top-3 text-gray-500;
+}
+
+/* Input fields */
+.login-input {
+  @apply w-full pl-10 p-3 rounded-xl
+         bg-white/20 text-white placeholder-white/70
+         border border-white/30
+         focus:outline-none focus:ring-2 focus:ring-emerald-400;
+  /* Make placeholder slightly brighter for readability */
+  &::placeholder {
+    @apply text-white/80;
+  }
+}
+
+/* Login button */
+.login-btn {
+  @apply w-full bg-emerald-500 hover:bg-emerald-400
+         py-3 rounded-xl font-semibold text-white
+         transition-all mb-4;
+}
+
+/* OR separator */
+.login-or {
+  @apply flex items-center my-4 text-white;
+}
+.login-or hr {
+  @apply flex-1 border-white/40;
+}
+.login-or span {
+  @apply mx-2 text-white/80 font-medium;
+}
+
+/* Signup button */
+.signup-btn {
+  @apply w-full block bg-blue-600 hover:bg-blue-500
+         py-3 rounded-xl font-semibold text-white mb-4 transition-all;
+}
+
+/* Forgot password */
+.forgot-password {
+  @apply text-sm text-white/80 mt-2;
+}
+.forgot-link {
+  @apply text-emerald-300 font-medium hover:underline;
+}

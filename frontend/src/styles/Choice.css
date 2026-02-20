@@ -1,99 +1,72 @@
-/* PAGE BACKGROUND */
+/* Background image */
 .choice-page {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #0f172a, #020617);
-  padding: 20px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  @apply relative min-h-screen flex items-center justify-center text-white overflow-hidden;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
-/* MAIN CARD */
+/* Brighter overlay */
+.choice-overlay {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    135deg,
+    rgba(6, 78, 59, 0.6),   /* less opacity → brighter */
+    rgba(15, 23, 42, 0.5)   /* less dark → more visible background */
+  );
+}
+
+/* SINGLE glass chat bubble */
 .choice-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 40px;
-  max-width: 700px;
-  width: 100%;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  @apply relative z-10 max-w-xl w-full
+         px-12 py-14 rounded-3xl text-center
+         bg-white/10 backdrop-blur-xl
+         shadow-[0_30px_80px_rgba(0,0,0,0.45)]
+         border border-white/20;
 }
 
-/* TITLE */
+/* Title */
 .choice-card h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: #0f172a;
+  @apply text-4xl font-extrabold mb-2;
 }
 
 .choice-card p {
-  color: #475569;
-  margin-bottom: 40px;
-  font-size: 1rem;
+  @apply text-slate-200 mb-10;
 }
 
-/* OPTIONS CONTAINER */
+/* Options layout */
 .choice-options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
 }
 
-/* OPTION CARD */
+/* Option buttons / links */
 .choice-option {
-  border: 2px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 30px 20px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-decoration: none;
-  color: inherit;
-  background: #f9fafb;
+  @apply flex flex-col items-center justify-center
+         px-6 py-8 rounded-2xl
+         bg-white/10 border border-white/20
+         text-white cursor-pointer
+         transition-all duration-300;
 }
 
 .choice-option:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  border-color: #38bdf8;
-  background: #ffffff;
+  @apply bg-white/20 -translate-y-1 shadow-lg;
 }
 
-/* ICON */
+/* Icon */
 .choice-option .icon {
-  font-size: 2.4rem;
-  margin-bottom: 15px;
+  @apply text-3xl mb-4;
 }
 
-/* OPTION TITLE */
+/* Titles */
 .choice-option h3 {
-  font-size: 1.3rem;
-  margin-bottom: 6px;
-  color: #0f172a;
+  @apply text-lg font-semibold mb-1;
 }
 
-/* OPTION DESCRIPTION */
 .choice-option span {
-  font-size: 0.95rem;
-  color: #64748b;
+  @apply text-sm text-slate-200;
 }
 
-/* LOGIN HIGHLIGHT */
+/* Login highlight */
 .choice-option.login {
-  border-color: #38bdf8;
-}
-
-.choice-option.login h3 {
-  color: #0284c7;
-}
-
-/* MOBILE */
-@media (max-width: 640px) {
-  .choice-options {
-    grid-template-columns: 1fr;
-  }
-
-  .choice-card {
-    padding: 30px 20px;
-  }
+  @apply border-emerald-400;
 }

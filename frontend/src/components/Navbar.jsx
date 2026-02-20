@@ -1,16 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/Navbar.css";
 
 function Navbar() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"));
   const [openMenu, setOpenMenu] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-
     const handleAuthChange = () => {
       const token = localStorage.getItem("token");
       setIsLoggedIn(!!token);
@@ -35,7 +33,9 @@ function Navbar() {
 
       <div className="nav-links">
         <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
+        {!(location.pathname === "/" || location.pathname === "/about") && (
+          <Link to="/about">About</Link>
+        )}
 
         {!isLoggedIn ? (
           <>
