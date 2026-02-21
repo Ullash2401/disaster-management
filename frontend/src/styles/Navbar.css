@@ -4,9 +4,9 @@
   align-items: center;
   padding: 15px 40px;
   background-color: #0f172a;
-  position: relative;      /* ADDED: reference for dropdown */
-  overflow: visible;       /* ADDED: ensure dropdown isn't cut off */
-  z-index: 10;             /* optional: keep navbar on top */
+  position: relative;
+  overflow: visible;
+  z-index: 10;
 }
 
 .logo {
@@ -14,72 +14,68 @@
   font-weight: bold;
 }
 
-.nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.signup-btn {
-  background-color: #38bdf8;
-  padding: 8px 14px;
-  border-radius: 5px;
-  color: #000;
-  font-weight: bold;
-}
-
-/* PROFILE DROPDOWN */
+/* DROPDOWN WRAPPER */
 .profile-dropdown {
   position: relative;
 }
 
+/* MENU BUTTON */
 .profile-btn {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
-  color: white;            /* make it visible on dark navbar */
-  padding: 5px 10px;       /* increase click area */
-  border-radius: 4px;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
 }
 
+/* GLASS DROPDOWN */
 .dropdown-menu {
   position: absolute;
-  top: 40px;               /* slightly below the button */
+  top: 45px;
   right: 0;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  width: 160px;             /* slightly wider */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  width: 190px;
+
+  /* 🔥 GLASS EFFECT */
+  background: rgba(15, 23, 42, 0.75); /* transparent dark */
+  backdrop-filter: blur(10px);
+
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
   display: flex;
   flex-direction: column;
-  z-index: 9999;           /* HIGHER so it appears above everything */
+  gap: 4px;
+
+  z-index: 9999;
 }
 
+/* LINKS + BUTTONS */
 .dropdown-menu a,
 .dropdown-menu button {
-  padding: 10px 14px;
-  text-align: left;
-  background: none;
+  color: white;
+  text-decoration: none;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+
+  background: transparent;
   border: none;
   cursor: pointer;
+  text-align: left;
   width: 100%;
-  font-size: 0.95rem;
 }
 
+/* HOVER EFFECT */
 .dropdown-menu a:hover,
 .dropdown-menu button:hover {
-  background-color: #f2f2f2;
+  background: rgba(255, 255, 255, 0.15);
 }
 
+/* LOGOUT */
 .logout-btn {
-  color: red;
+  color: #ff6b6b;
   font-weight: 500;
 }
