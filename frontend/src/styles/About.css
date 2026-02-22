@@ -4,6 +4,8 @@
   background-image: url("../assets/nature.jpg");
   background-size: cover;
   background-position: center;
+
+  z-index: 0; /* Ensure root stays behind dropdown */
 }
 
 /* Dark overlay */
@@ -14,18 +16,18 @@
     rgba(6, 78, 59, 0.85),
     rgba(15, 23, 42, 0.9)
   );
+  z-index: 0; /* Keep overlay behind navbar dropdown */
 }
 
-/* SINGLE chat-bubble glass container */
+/* Glass container for content */
 .about-container {
-  @apply relative z-10 max-w-5xl w-full
-         px-12 py-16 rounded-3xl
-         bg-white/10 backdrop-blur-xl
+  @apply relative max-w-5xl w-full px-12 py-16
+         rounded-3xl bg-white/10 backdrop-blur-xl
          shadow-[0_30px_80px_rgba(0,0,0,0.45)]
-         border border-white/20
-         overflow-y-auto;
+         border border-white/20 overflow-y-auto;
 
-  max-height: 85vh; /* makes it scroll like a chat bubble */
+  max-height: 85vh; /* scrollable like chat bubble */
+  z-index: 10;      /* higher than overlay, still below navbar dropdown */
 }
 
 /* Title */

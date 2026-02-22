@@ -1,0 +1,146 @@
+/* ---------- ROOT ---------- */
+.dashboard-root {
+  @apply relative min-h-screen text-white overflow-hidden;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.dashboard-overlay {
+  @apply absolute inset-0 bg-black/60;
+  z-index: 1;
+}
+
+/* ---------- SPIN SLIDESHOW ---------- */
+
+.spin-carousel {
+  @apply relative w-full overflow-hidden mt-20;
+  z-index: 2;
+}
+
+.spin-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: spin-scroll 30s linear infinite;
+}
+
+.spin-card {
+  min-width: 280px;
+  max-width: 280px;
+  padding: 1.25rem;
+  border-radius: 1rem;
+
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.spin-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.spin-desc {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Infinite spin animation */
+@keyframes spin-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- RECENT REPORTS ---------- */
+
+.recent-reports {
+  @apply relative max-w-6xl mx-auto mt-20 px-6;
+  z-index: 2;
+}
+
+.recent-title {
+  @apply text-2xl font-bold text-green-400 mb-6;
+}
+
+.recent-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+
+.recent-card {
+  @apply p-4 rounded-xl;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+}
+
+.recent-card h4 {
+  @apply font-semibold mb-2;
+}
+
+.recent-card p {
+  @apply text-sm opacity-90;
+}
+
+/* ---------- TITLE ---------- */
+
+.dashboard-title {
+  @apply relative mt-16 text-center text-3xl font-bold text-green-400;
+  z-index: 2;
+}
+
+/* ---------- RECENT REPORT LIST ---------- */
+
+.recent-list {
+  @apply flex flex-col gap-4;
+}
+
+.recent-list-item {
+  @apply p-4 rounded-xl cursor-pointer;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease;
+}
+
+.recent-list-item:hover {
+  transform: scale(1.02);
+}
+
+/* ---------- MODAL ---------- */
+
+.modal-backdrop {
+  @apply fixed inset-0 flex items-center justify-center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+}
+
+.report-modal {
+  @apply max-w-2xl w-full p-6 rounded-2xl text-white;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.report-modal h2 {
+  @apply text-2xl font-bold mb-4;
+}
+
+.report-meta {
+  @apply flex gap-4 text-sm mb-4 opacity-90;
+}
+
+.report-full {
+  @apply text-base leading-relaxed mb-4;
+}
+
+.report-affected {
+  @apply font-semibold mb-6;
+}
+
+.close-btn {
+  @apply px-6 py-2 rounded-lg bg-red-500 font-semibold;
+}
