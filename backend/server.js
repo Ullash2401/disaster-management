@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+
 require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
+const reportRoutes = require("./routes/reports");
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.use(express.json());
 
 // -------------------- ROUTES --------------------
 app.use("/api/auth", authRoutes);
+app.use("/api/reports", reportRoutes);
 
 // -------------------- MONGODB CONNECTION --------------------
 mongoose
