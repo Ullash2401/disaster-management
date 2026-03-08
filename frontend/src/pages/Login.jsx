@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import "../styles/login.css";
@@ -9,6 +9,14 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // ✅ Redirect if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,10 +37,12 @@ const Login = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
 
+      // Save auth info
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       window.dispatchEvent(new Event("authChange"));
 
+      // Redirect after login
       navigate("/dashboard");
     } catch (err) {
       setError(err.message);
@@ -43,16 +53,13 @@ const Login = () => {
 
   return (
     <div className="login-root">
-      {/* Overlay */}
       <div className="login-overlay"></div>
 
-      {/* Glass card */}
       <form onSubmit={handleSubmit} className="login-card">
         <h2 className="login-title">Welcome Back</h2>
 
         {error && <p className="login-error">{error}</p>}
 
-        {/* Email Input */}
         <div className="login-input-wrapper">
           <FaEnvelope className="login-icon" />
           <input
@@ -66,7 +73,6 @@ const Login = () => {
           />
         </div>
 
-        {/* Password Input */}
         <div className="login-input-wrapper">
           <FaLock className="login-icon" />
           <input

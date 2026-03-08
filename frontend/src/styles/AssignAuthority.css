@@ -1,0 +1,68 @@
+/* ---------- ROOT ---------- */
+.assign-authority-root {
+  @apply relative min-h-screen flex flex-col items-center px-8 py-12 text-white;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Overlay for contrast */
+.assign-overlay {
+  @apply absolute inset-0 bg-emerald-900/60;
+}
+
+/* Glass container */
+.assign-content {
+  @apply relative z-10 w-full max-w-5xl p-10 rounded-3xl
+         bg-white/10 backdrop-blur-xl shadow-2xl flex flex-col gap-8;
+}
+
+/* Headings */
+.assign-content h1 {
+  @apply text-4xl md:text-5xl font-extrabold text-center;
+}
+
+.assign-content h1 span {
+  @apply text-emerald-300;
+}
+
+/* Users table */
+.user-table {
+  @apply w-full border-collapse rounded-xl overflow-hidden;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.user-table th,
+.user-table td {
+  @apply px-6 py-4 text-left text-white;
+}
+
+.user-table th {
+  @apply bg-emerald-500 bg-opacity-20 font-semibold;
+}
+
+.user-table tbody tr {
+  @apply transition-transform duration-200 cursor-pointer;
+}
+
+.user-table tbody tr:hover {
+  transform: scale(1.02);
+  background: rgba(0, 255, 128, 0.1);
+}
+
+/* Role select dropdown */
+.user-table select {
+  @apply px-3 py-1 rounded-lg bg-white/20 text-white font-semibold outline-none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.user-table select:hover {
+  @apply bg-white/30;
+}
+
+/* Note / Instructions */
+.note {
+  @apply mt-4 text-sm text-gray-300 italic text-center;
+}

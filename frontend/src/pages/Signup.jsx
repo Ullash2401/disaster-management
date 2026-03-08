@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import "../styles/signup.css"; // new CSS
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/signup.css";
 
 function Signup() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -26,8 +28,12 @@ function Signup() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Signup failed");
 
-      setMessage("Account created successfully!");
-      setFormData({ name: "", email: "", password: "" });
+      // ✅ Auto-login after signup
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      window.dispatchEvent(new Event("authChange"));
+
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -37,10 +43,8 @@ function Signup() {
 
   return (
     <div className="signup-root">
-      {/* Overlay */}
       <div className="signup-overlay"></div>
 
-      {/* Glass Card */}
       <div className="signup-card">
         <h2 className="signup-title">Create Account</h2>
 
@@ -48,7 +52,6 @@ function Signup() {
         {message && <p className="signup-message">{message}</p>}
 
         <form onSubmit={handleSubmit} className="signup-form">
-          {/* Name */}
           <div className="signup-input-wrapper">
             <FaUser className="signup-icon" />
             <input
@@ -62,7 +65,6 @@ function Signup() {
             />
           </div>
 
-          {/* Email */}
           <div className="signup-input-wrapper">
             <FaEnvelope className="signup-icon" />
             <input
@@ -76,7 +78,6 @@ function Signup() {
             />
           </div>
 
-          {/* Password */}
           <div className="signup-input-wrapper">
             <FaLock className="signup-icon" />
             <input
@@ -90,7 +91,6 @@ function Signup() {
             />
           </div>
 
-          {/* Submit */}
           <button type="submit" disabled={loading} className="signup-btn">
             {loading ? "Creating Account..." : "Sign Up"}
           </button>

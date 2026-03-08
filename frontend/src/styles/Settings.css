@@ -1,0 +1,80 @@
+/* ---------- ROOT ---------- */
+.settings-root {
+  @apply relative min-h-screen flex flex-col items-center px-8 py-12 text-white;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Overlay for contrast */
+.settings-overlay {
+  @apply absolute inset-0 bg-emerald-900/60;
+}
+
+/* Glass container */
+.settings-content {
+  @apply relative z-10 w-full max-w-5xl p-10 rounded-3xl
+         bg-white/10 backdrop-blur-xl shadow-2xl flex flex-col gap-8;
+}
+
+/* Headings */
+.settings-content h1 {
+  @apply text-4xl md:text-5xl font-extrabold text-center;
+}
+
+.settings-content h1 span {
+  @apply text-emerald-300;
+}
+
+.settings-content h2 {
+  @apply text-2xl font-semibold text-white/90;
+}
+
+/* Form wrapper */
+.settings-form {
+  @apply w-full flex flex-col gap-5;
+}
+
+/* Input wrappers */
+.settings-input-wrapper {
+  @apply relative flex items-center gap-3;
+}
+
+.settings-icon {
+  @apply absolute left-3 text-white/70;
+}
+
+.settings-input {
+  @apply w-full py-3 pl-10 pr-4 rounded-xl bg-white/20 text-white
+         placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-emerald-400
+         transition;
+}
+
+/* Buttons */
+.settings-btn {
+  @apply mt-6 px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400
+         transition font-semibold text-white shadow-lg;
+}
+
+/* Messages */
+.settings-error {
+  @apply text-red-400 mb-3;
+}
+
+.settings-message {
+  @apply text-green-400 mb-3;
+}
+
+/* Optional toggle / checkbox */
+.settings-toggle {
+  @apply flex items-center gap-3;
+}
+
+.settings-toggle input[type="checkbox"] {
+  @apply accent-emerald-400 w-5 h-5;
+}
+
+/* Notes / instructions */
+.settings-note {
+  @apply mt-4 text-sm text-gray-300 italic text-center;
+}

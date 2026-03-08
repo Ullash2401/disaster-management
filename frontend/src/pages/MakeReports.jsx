@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./MakeReport.css";
+import "../styles/MakeReport.css";
 
 const MakeReport = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ const MakeReport = () => {
     location: "",
   });
 
-  const [successMessage, setSuccessMessage] = useState(""); // new state
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -25,33 +25,47 @@ const MakeReport = () => {
     e.preventDefault();
 
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId") || undefined;
+
+      const payload = {
+        ...formData,
+        affectedPeople: Number(formData.affectedPeople) || 0,
+        userId
+      };
+
       const res = await fetch("http://localhost:5000/api/reports/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, userId }),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
-      setSuccessMessage("Report saved successfully! ✅"); // show message
 
-      // Clear form
-      setFormData({
-        title: "",
-        shortDescription: "",
-        fullDescription: "",
-        date: "",
-        severity: "",
-        affectedPeople: "",
-        location: "",
-      });
+      if (res.ok) {
+        setSuccessMessage("Report saved successfully ✅");
 
-      // Remove message after 3 seconds
-      setTimeout(() => setSuccessMessage(""), 3000);
+        // Clear form
+        setFormData({
+          title: "",
+          shortDescription: "",
+          fullDescription: "",
+          date: "",
+          severity: "",
+          affectedPeople: "",
+          location: "",
+        });
+      } else if (data.fields) {
+        // Show backend field-specific errors
+        setSuccessMessage("Errors: " + data.fields.join(", "));
+      } else {
+        setSuccessMessage(data.message || "Failed to save report ❌");
+      }
+
+      setTimeout(() => setSuccessMessage(""), 5000);
     } catch (err) {
-      console.error("Error adding report:", err);
-      setSuccessMessage("Failed to save report ❌");
-      setTimeout(() => setSuccessMessage(""), 3000);
+      console.error("Server error:", err);
+      setSuccessMessage("Server error. Please try again ❌");
+      setTimeout(() => setSuccessMessage(""), 5000);
     }
   };
 
@@ -60,12 +74,9 @@ const MakeReport = () => {
       <div className="overlay"></div>
 
       <div className="content">
-        <h1>
-          Create <span>Disaster Report</span>
-        </h1>
+        <h1>Create <span>Disaster Report</span></h1>
         <p>Fill in the details below to submit a new disaster report.</p>
 
-        {/* Success / Error Message */}
         {successMessage && (
           <div className="success-message">{successMessage}</div>
         )}
@@ -80,6 +91,7 @@ const MakeReport = () => {
             required
             className="form-input"
           />
+
           <input
             type="text"
             name="shortDescription"
@@ -89,6 +101,7 @@ const MakeReport = () => {
             required
             className="form-input"
           />
+
           <textarea
             name="fullDescription"
             placeholder="Full Description"
@@ -98,6 +111,7 @@ const MakeReport = () => {
             required
             className="form-input"
           />
+
           <input
             type="date"
             name="date"
@@ -105,6 +119,7 @@ const MakeReport = () => {
             onChange={handleChange}
             className="form-input"
           />
+
           <select
             name="severity"
             value={formData.severity}
@@ -117,14 +132,16 @@ const MakeReport = () => {
             <option value="High">High</option>
             <option value="Critical">Critical</option>
           </select>
+
           <input
-            type="text"
+            type="number"
             name="affectedPeople"
             placeholder="Affected People"
             value={formData.affectedPeople}
             onChange={handleChange}
             className="form-input"
           />
+
           <input
             type="text"
             name="location"
@@ -133,9 +150,8 @@ const MakeReport = () => {
             onChange={handleChange}
             className="form-input"
           />
-          <button type="submit" className="btn-primary">
-            Add Report
-          </button>
+
+          <button type="submit" className="btn-primary">Add Report</button>
         </form>
       </div>
     </div>

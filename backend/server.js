@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
 const reportRoutes = require("./routes/reports");
+const adminRoutes = require("./routes/admin");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 // -------------------- ROUTES --------------------
 app.use("/api/auth", authRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/admin", adminRoutes);
 
 // -------------------- MONGODB CONNECTION --------------------
 mongoose

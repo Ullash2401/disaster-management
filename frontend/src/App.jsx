@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Donate from "./pages/Donate";
 import MakeReports from "./pages/MakeReports";
 import AssignAuthority from "./pages/AssignAuthority";
+import Settings from "./pages/Settings"; // make sure you import it
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/donate" element={<Donate />} />
+        <Route path="/settings" element={<Settings />} />
 
         {/* Protected pages */}
         <Route
@@ -48,16 +50,16 @@ function App() {
             <ProtectedRoute>
               <MakeReports />
             </ProtectedRoute>
-        }
-      />
-      <Route
+          }
+        />
+        <Route
           path="/assign-authority"
           element={
             <ProtectedRoute>
               <AssignAuthority />
             </ProtectedRoute>
           }
-      />
+        />
       </Routes>
     </BrowserRouter>
   );

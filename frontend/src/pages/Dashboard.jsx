@@ -6,7 +6,7 @@ const Dashboard = () => {
   const [selectedReport, setSelectedReport] = useState(null);
 
   return (
-    <div className="dashboard-root">
+    <div className="dashboard-root" style={{ paddingBottom: "50px" }}>
       <div className="dashboard-overlay"></div>
 
       {/* Spin Slideshow */}
@@ -25,10 +25,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Recent Reports (summary only) */}
+      {/* Recent Reports */}
       <div className="recent-reports">
         <h2 className="recent-title">Recent Reports</h2>
-
         <ul className="recent-list">
           {reports.map((report) => (
             <li
@@ -43,7 +42,7 @@ const Dashboard = () => {
         </ul>
       </div>
 
-      {/* FULL REPORT MODAL */}
+      {/* Full Report Modal */}
       {selectedReport && (
         <div className="modal-backdrop" onClick={() => setSelectedReport(null)}>
           <div className="report-modal" onClick={(e) => e.stopPropagation()}>
@@ -52,13 +51,12 @@ const Dashboard = () => {
             <div className="report-meta">
               <span>📍 {selectedReport.location}</span>
               <span>📅 {selectedReport.date}</span>
-              <span className={`severity ${selectedReport.severity.toLowerCase()}`}>
+              <span className={`severity ${selectedReport.severity?.toLowerCase()}`}>
                 {selectedReport.severity}
               </span>
             </div>
 
             <p className="report-full">{selectedReport.fullDescription}</p>
-
             <p className="report-affected">
               👥 Affected People: {selectedReport.affectedPeople}
             </p>
