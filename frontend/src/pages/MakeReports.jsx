@@ -12,7 +12,7 @@ const MakeReport = () => {
     location: "",
   });
 
-  const [successMessage, setSuccessMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -25,26 +25,44 @@ const MakeReport = () => {
     e.preventDefault();
 
     try {
-      const userId = localStorage.getItem("userId") || undefined;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setMessage("You must login first ❌");
+        return;
+      }
 
       const payload = {
         ...formData,
         affectedPeople: Number(formData.affectedPeople) || 0,
-        userId
       };
 
       const res = await fetch("http://localhost:5000/api/reports/add", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 
       const data = await res.json();
 
-      if (res.ok) {
-        setSuccessMessage("Report saved successfully ✅");
+      // HANDLE AUTH ERRORS
+      if (res.status === 401) {
+        setMessage("Session expired. Please login again ❌");
+        localStorage.removeItem("token");
+        return;
+      }
 
-        // Clear form
+      if (res.status === 403) {
+        setMessage("You are not authorized to create reports ❌");
+        return;
+      }
+
+      if (res.ok) {
+        setMessage("Report saved successfully ✅");
+
         setFormData({
           title: "",
           shortDescription: "",
@@ -55,17 +73,16 @@ const MakeReport = () => {
           location: "",
         });
       } else if (data.fields) {
-        // Show backend field-specific errors
-        setSuccessMessage("Errors: " + data.fields.join(", "));
+        setMessage("Missing fields: " + data.fields.join(", "));
       } else {
-        setSuccessMessage(data.message || "Failed to save report ❌");
+        setMessage(data.message || "Failed to save report ❌");
       }
 
-      setTimeout(() => setSuccessMessage(""), 5000);
+      setTimeout(() => setMessage(""), 5000);
+
     } catch (err) {
-      console.error("Server error:", err);
-      setSuccessMessage("Server error. Please try again ❌");
-      setTimeout(() => setSuccessMessage(""), 5000);
+      console.error(err);
+      setMessage("Server error. Please try again ❌");
     }
   };
 
@@ -77,8 +94,8 @@ const MakeReport = () => {
         <h1>Create <span>Disaster Report</span></h1>
         <p>Fill in the details below to submit a new disaster report.</p>
 
-        {successMessage && (
-          <div className="success-message">{successMessage}</div>
+        {message && (
+          <div className="success-message">{message}</div>
         )}
 
         <form className="report-form" onSubmit={handleSubmit}>
@@ -124,8 +141,8 @@ const MakeReport = () => {
             name="severity"
             value={formData.severity}
             onChange={handleChange}
-            className={`form-input severity-${formData.severity.toLowerCase()}`}
             required
+            className={`form-input severity-${formData.severity?.toLowerCase()}`}
           >
             <option value="">Select Severity</option>
             <option value="Low">Low</option>
@@ -151,7 +168,9 @@ const MakeReport = () => {
             className="form-input"
           />
 
-          <button type="submit" className="btn-primary">Add Report</button>
+          <button type="submit" className="btn-primary">
+            Add Report
+          </button>
         </form>
       </div>
     </div>

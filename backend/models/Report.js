@@ -1,70 +1,46 @@
-const express = require("express");
-const router = express.Router();
-const Report = require("../models/Report");
+const mongoose = require("mongoose");
 
-// CREATE REPORT with full debug info
-router.post("/add", async (req, res) => {
-  // Log the incoming request body
-  console.log("Incoming report data:", req.body);
+const reportSchema = new mongoose.Schema({
 
-  try {
-    const {
-      title,
-      shortDescription,
-      fullDescription,
-      date,
-      severity,
-      affectedPeople,
-      location,
-      userId
-    } = req.body;
+  title: {
+    type: String,
+    required: true
+  },
 
-    // Prepare report data
-    const reportData = {
-      title,
-      shortDescription,
-      fullDescription,
-      date,
-      severity,
-      affectedPeople: Number(affectedPeople) || 0,
-      location,
-      user: userId || undefined // optional for now
-    };
+  shortDescription: {
+    type: String,
+    required: true
+  },
 
-    const report = new Report(reportData);
-    const savedReport = await report.save();
+  fullDescription: {
+    type: String,
+    required: true
+  },
 
-    console.log("Report saved successfully:", savedReport);
+  date: {
+    type: Date
+  },
 
-    res.status(201).json({
-      message: "Report saved successfully ✅",
-      report: savedReport
-    });
+  severity: {
+    type: String,
+    enum: ["Low", "High", "Critical"],
+    required: true
+  },
 
-  } catch (err) {
-    // Log the full error
-    console.error("Error saving report:", err);
+  affectedPeople: {
+    type: Number,
+    default: 0
+  },
 
-    // If validation error, highlight which fields caused it
-    if (err.name === "ValidationError") {
-      const fieldErrors = Object.keys(err.errors).map(
-        (field) => `${field}: ${err.errors[field].message}`
-      );
+  location: {
+    type: String
+  },
 
-      return res.status(400).json({
-        message: "Validation failed ❌",
-        fields: fieldErrors,
-        receivedData: req.body // include what was sent
-      });
-    }
-
-    // Other errors
-    res.status(500).json({
-      message: "Failed to save report ❌",
-      error: err.message,
-      receivedData: req.body
-    });
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   }
-});
 
-module.exports = router;
+}, { timestamps: true });
+
+module.exports = mongoose.model("Report", reportSchema);

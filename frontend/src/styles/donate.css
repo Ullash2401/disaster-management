@@ -1,0 +1,96 @@
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+.donation-wrapper{
+
+    background:#34495e;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+}
+
+.donation-card{
+
+    background:white;
+    width:1100px;
+    display:flex;
+    border-radius:12px;
+    padding:40px;
+    gap:40px;
+}
+
+.donation-form{
+
+    flex:1;
+}
+
+.donation-form h2{
+
+    margin-bottom:25px;
+    font-weight:600;
+}
+
+.donation-form input,
+.donation-form select,
+.donation-form textarea{
+
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+
+.row{
+
+    display:flex;
+    gap:10px;
+}
+
+textarea{
+
+    height:80px;
+    resize:none;
+}
+
+.checkbox{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.donate-btn{
+
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#66a567;
+    color:white;
+    font-size:16px;
+    border-radius:30px;
+    cursor:pointer;
+}
+
+.donate-btn:hover{
+
+    background:#4e8c4f;
+}
+
+.donation-image{
+
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.donation-image img{
+
+    width:320px;
+}

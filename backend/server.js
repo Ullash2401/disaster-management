@@ -5,13 +5,13 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
-const reportRoutes = require("./routes/reports");
+const reportRoutes = require("./routes/reportRoutes");
 const adminRoutes = require("./routes/admin");
+const donationRoutes = require("./routes/donationRoutes");
 
 const app = express();
 
 // -------------------- MIDDLEWARE --------------------
-// Enable CORS specifically for frontend port 5173
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 
@@ -19,6 +19,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/donations", donationRoutes);
 
 // -------------------- MONGODB CONNECTION --------------------
 mongoose
@@ -42,6 +43,7 @@ app.get("/add-test", async (req, res) => {
 
 // -------------------- START SERVER --------------------
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
