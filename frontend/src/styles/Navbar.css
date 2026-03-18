@@ -6,7 +6,7 @@
   background-color: #0f172a;
   position: relative;
   overflow: visible;
-  z-index: 10;
+  z-index: 9999;
 }
 
 .logo {

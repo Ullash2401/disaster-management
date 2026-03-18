@@ -12,7 +12,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Donate from "./pages/Donate";
+import DonateIntro from "./pages/DonateIntro";
+import Donate from "./pages/donate";
 import MakeReports from "./pages/MakeReports";
 import AssignAuthority from "./pages/AssignAuthority";
 import Settings from "./pages/Settings"; // make sure you import it
@@ -32,6 +33,7 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/donate-intro" element={<DonateIntro />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/settings" element={<Settings />} />
 

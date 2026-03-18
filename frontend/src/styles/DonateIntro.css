@@ -1,0 +1,143 @@
+/* Wrapper with background image */
+.about-root {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Dark overlay */
+.about-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(6, 78, 59, 0.85),
+    rgba(15, 23, 42, 0.9)
+  );
+  z-index: 0;
+}
+
+/* Glass container */
+.about-container {
+  position: relative;
+  z-index: 10;
+
+  max-width: 850px;
+  width: 90%;
+  padding: 40px 40px 100px 40px; /* extra bottom padding for sticky button */
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+
+  color: white;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+/* Scrollbar */
+.about-container::-webkit-scrollbar {
+  width: 6px;
+}
+.about-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.about-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+.about-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Headers */
+.about-container h1 {
+  font-size: 3rem;       /* large title */
+  font-weight: 900;      /* extra bold */
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.about-container h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  color: #34d399; /* emerald accent */
+}
+
+.about-container h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  color: #a7f3d0; /* light emerald */
+}
+
+/* Paragraphs */
+.about-container p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #e5e7eb;
+}
+
+/* Lists */
+.about-container ul {
+  list-style: disc inside;
+  color: #e5e7eb;
+  margin-left: 10px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+/* Sticky Donate button */
+.donate-button-wrapper {
+  position: sticky;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  z-index: 15;
+}
+
+.donate-button-wrapper button {
+  padding: 14px 30px;
+  border-radius: 30px;
+  border: none;
+  background: #10b981;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.donate-button-wrapper button:hover {
+  background: #059669;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .about-container {
+    padding: 20px 20px 80px 20px;
+  }
+
+  .about-container h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-container h3 {
+    font-size: 1.2rem;
+  }
+}

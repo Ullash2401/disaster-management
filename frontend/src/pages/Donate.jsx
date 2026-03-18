@@ -3,7 +3,6 @@ import axios from "axios";
 import "../styles/donate.css";
 
 export default function Donate() {
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -17,9 +16,10 @@ export default function Donate() {
     message: ""
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value
@@ -28,46 +28,58 @@ export default function Donate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (formData.amount <= 0) {
+      alert("Amount must be greater than 0");
+      return;
+    }
     try {
-
-      const res = await axios.post(
-        "http://localhost:5000/api/donations",
-        formData
-      );
-
+      setLoading(true);
+      await axios.post("http://localhost:5000/api/donations", formData);
       alert("Donation submitted successfully!");
-
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        country: "",
+        amount: "",
+        disasterType: "",
+        paymentMethod: "",
+        anonymous: false,
+        message: ""
+      });
     } catch (error) {
       console.log(error);
       alert("Error submitting donation");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="donation-wrapper">
+      {/* Overlay */}
+      <div className="donation-overlay"></div>
 
       <div className="donation-card">
-
         <div className="donation-form">
-
-          <h2>Be a Donor</h2>
+          <h2>Donation Form</h2>
 
           <form onSubmit={handleSubmit}>
-
             <div className="row">
               <input
                 type="text"
                 placeholder="First Name"
                 name="firstName"
+                value={formData.firstName}
                 onChange={handleChange}
                 required
               />
-
               <input
                 type="text"
                 placeholder="Last Name"
                 name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
                 required
               />
@@ -77,6 +89,7 @@ export default function Donate() {
               type="email"
               placeholder="Email Address"
               name="email"
+              value={formData.email}
               onChange={handleChange}
               required
             />
@@ -86,13 +99,14 @@ export default function Donate() {
                 type="text"
                 placeholder="Country"
                 name="country"
+                value={formData.country}
                 onChange={handleChange}
               />
-
               <input
                 type="text"
                 placeholder="Phone Number"
                 name="phone"
+                value={formData.phone}
                 onChange={handleChange}
               />
             </div>
@@ -101,12 +115,14 @@ export default function Donate() {
               type="number"
               placeholder="Donation Amount ($)"
               name="amount"
+              value={formData.amount}
               onChange={handleChange}
               required
             />
 
             <select
               name="disasterType"
+              value={formData.disasterType}
               onChange={handleChange}
               required
             >
@@ -120,6 +136,7 @@ export default function Donate() {
 
             <select
               name="paymentMethod"
+              value={formData.paymentMethod}
               onChange={handleChange}
               required
             >
@@ -133,37 +150,28 @@ export default function Donate() {
             <textarea
               placeholder="Message (optional)"
               name="message"
+              value={formData.message}
               onChange={handleChange}
             />
 
+            {/* Anonymous checkbox with tick on the left */}
             <div className="checkbox">
               <input
                 type="checkbox"
+                id="anonymous"
                 name="anonymous"
+                checked={formData.anonymous}
                 onChange={handleChange}
               />
-              <label>Donate anonymously</label>
+              <label htmlFor="anonymous">Donate anonymously</label>
             </div>
 
-            <button type="submit" className="donate-btn">
-              Donate
+            <button type="submit" className="donate-btn" disabled={loading}>
+              {loading ? "Processing..." : "Donate"}
             </button>
-
           </form>
-
         </div>
-
-        <div className="donation-image">
-
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png"
-            alt="donation"
-          />
-
-        </div>
-
       </div>
-
     </div>
   );
 }

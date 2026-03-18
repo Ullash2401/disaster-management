@@ -71,7 +71,7 @@ function Navbar() {
             )}
 
             {/* Placeholder pages */}
-            {currentPath !== "/donate" && <Link to="/donate">Donate</Link>}
+            <Link to="/donate-intro">Donate</Link>
             {currentPath !== "/contact" && (
               <Link to="/contact">Contact Info</Link>
             )}
