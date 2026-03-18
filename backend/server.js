@@ -9,6 +9,8 @@ const reportRoutes = require("./routes/reportRoutes");
 const adminRoutes = require("./routes/admin");
 const donationRoutes = require("./routes/donationRoutes");
 
+const { initCategories } = require("./controllers/donationController"); // ✅ import
+
 const app = express();
 
 // -------------------- MIDDLEWARE --------------------
@@ -24,7 +26,12 @@ app.use("/api/donations", donationRoutes);
 // -------------------- MONGODB CONNECTION --------------------
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
+  .then(async () => {
+    console.log("MongoDB Connected");
+
+    // ✅ Initialize donation categories
+    await initCategories();
+  })
   .catch((err) => {
     console.error("MongoDB connection error:", err.message);
     process.exit(1);

@@ -16,7 +16,8 @@ import DonateIntro from "./pages/DonateIntro";
 import Donate from "./pages/donate";
 import MakeReports from "./pages/MakeReports";
 import AssignAuthority from "./pages/AssignAuthority";
-import Settings from "./pages/Settings"; // make sure you import it
+import Settings from "./pages/Settings";
+import AssignDonation from "./pages/AssignDonation"; // ✅ IMPORT ADDED
 
 function App() {
   return (
@@ -59,6 +60,14 @@ function App() {
           element={
             <ProtectedRoute>
               <AssignAuthority />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assign-donation"
+          element={
+            <ProtectedRoute>
+              <AssignDonation /> {/* ✅ Now correctly imported */}
             </ProtectedRoute>
           }
         />

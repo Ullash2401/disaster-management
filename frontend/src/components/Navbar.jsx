@@ -98,6 +98,7 @@ function Navbar() {
                 {currentPath !== "/settings" && <Link to="/settings">Settings</Link>}
                 {currentPath !== "/make-reports" && <Link to="/make-reports">Make Reports</Link>}
                 {currentPath !== "/assign-authority" && <Link to="/assign-authority">Assign Authority</Link>}
+                {currentPath !== "/assign-donation" && <Link to="/assign-donation">Assign Donation</Link>}
                 <button onClick={handleLogout} className="logout-btn">Logout</button>
               </>
             )}
