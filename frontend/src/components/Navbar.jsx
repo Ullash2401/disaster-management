@@ -5,7 +5,7 @@ import "../styles/Navbar.css";
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const menuRef = useRef();
+  const menuRef = useRef(null);
 
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => !!localStorage.getItem("token")
@@ -25,7 +25,6 @@ function Navbar() {
       }
     };
 
-    // initial auth check
     updateAuth();
 
     window.addEventListener("authChange", updateAuth);
@@ -51,7 +50,6 @@ function Navbar() {
     <nav className="navbar">
       <h2 className="logo">DisasterSafe</h2>
 
-      {/* DROPDOWN MENU */}
       <div className="profile-dropdown" ref={menuRef}>
         <button
           className="profile-btn"
@@ -62,44 +60,69 @@ function Navbar() {
 
         {openMenu && (
           <div className="dropdown-menu">
+
             {/* Home */}
             {currentPath !== "/" && <Link to="/">Home</Link>}
 
-            {/* About (hidden on Home) */}
+            {/* About */}
             {currentPath !== "/" && currentPath !== "/about" && (
               <Link to="/about">About</Link>
             )}
 
-            {/* Placeholder pages */}
+            {/* Public Links */}
             <Link to="/donate-intro">Donate</Link>
+
             {currentPath !== "/contact" && (
               <Link to="/contact">Contact Info</Link>
             )}
 
-            {/* Login / Signup */}
+            {/* Auth Links */}
             {!isLoggedIn && (
               <>
-                {/* Login only shows if NOT on /login, /signup, /choice */}
                 {currentPath !== "/login" &&
-                 currentPath !== "/signup" &&
-                 currentPath !== "/choice" && <Link to="/login">Login</Link>}
+                  currentPath !== "/signup" &&
+                  currentPath !== "/choice" && (
+                    <Link to="/login">Login</Link>
+                  )}
 
-                {/* Signup only shows if NOT on /signup or /login */}
-                {currentPath !== "/signup" && currentPath !== "/login" && (
-                  <Link to="/signup">Sign Up</Link>
-                )}
+                {currentPath !== "/signup" &&
+                  currentPath !== "/login" && (
+                    <Link to="/signup">Sign Up</Link>
+                  )}
               </>
             )}
 
-            {/* Protected links */}
+            {/* Protected Links */}
             {isLoggedIn && (
               <>
-                {currentPath !== "/dashboard" && <Link to="/dashboard">Dashboard</Link>}
-                {currentPath !== "/settings" && <Link to="/settings">Settings</Link>}
-                {currentPath !== "/make-reports" && <Link to="/make-reports">Make Reports</Link>}
-                {currentPath !== "/assign-authority" && <Link to="/assign-authority">Assign Authority</Link>}
-                {currentPath !== "/assign-donation" && <Link to="/assign-donation">Assign Donation</Link>}
-                <button onClick={handleLogout} className="logout-btn">Logout</button>
+                {currentPath !== "/dashboard" && (
+                  <Link to="/dashboard">Dashboard</Link>
+                )}
+
+                {currentPath !== "/settings" && (
+                  <Link to="/settings">Settings</Link>
+                )}
+
+                {currentPath !== "/make-reports" && (
+                  <Link to="/make-reports">Make Reports</Link>
+                )}
+
+                {currentPath !== "/assign-authority" && (
+                  <Link to="/assign-authority">Assign Authority</Link>
+                )}
+
+                {currentPath !== "/assign-donation" && (
+                  <Link to="/assign-donation">Assign Donation</Link>
+                )}
+
+                {/* NEW: Volunteer Report */}
+                {currentPath !== "/volunteer-report" && (
+                  <Link to="/volunteer-report">Volunteer Report</Link>
+                )}
+
+                <button onClick={handleLogout} className="logout-btn">
+                  Logout
+                </button>
               </>
             )}
           </div>

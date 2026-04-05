@@ -1,27 +1,35 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
 require("dotenv").config();
 
+// -------------------- ROUTES --------------------
 const authRoutes = require("./routes/auth");
 const reportRoutes = require("./routes/reportRoutes");
 const adminRoutes = require("./routes/admin");
 const donationRoutes = require("./routes/donationRoutes");
-
-const { initCategories } = require("./controllers/donationController"); // ✅ import
+const volunteerReportRoutes = require("./routes/volunteerReportRoutes"); // ✅ existing
+const accountRoutes = require("./routes/accountRoutes"); // ✅ new account routes
+const { initCategories } = require("./controllers/donationController");
 
 const app = express();
 
 // -------------------- MIDDLEWARE --------------------
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend URL
+    credentials: true,
+  })
+);
 app.use(express.json());
 
-// -------------------- ROUTES --------------------
+// -------------------- API ROUTES --------------------
 app.use("/api/auth", authRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/donations", donationRoutes);
+app.use("/api/volunteer-reports", volunteerReportRoutes);
+app.use("/api/account", accountRoutes); // ✅ account update/delete
 
 // -------------------- MONGODB CONNECTION --------------------
 mongoose
@@ -29,7 +37,7 @@ mongoose
   .then(async () => {
     console.log("MongoDB Connected");
 
-    // ✅ Initialize donation categories
+    // Initialize donation categories if needed
     await initCategories();
   })
   .catch((err) => {
@@ -50,7 +58,6 @@ app.get("/add-test", async (req, res) => {
 
 // -------------------- START SERVER --------------------
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

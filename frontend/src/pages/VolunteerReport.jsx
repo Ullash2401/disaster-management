@@ -18,19 +18,28 @@ const VolunteerReport = () => {
   // Update main form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    let updatedData = { ...formData, [name]: value };
+
+    // Recalculate remaining balance if allocatedAmount changes
+    if (name === "allocatedAmount") {
+      const totalSpent = updatedData.items.reduce(
+        (sum, item) => sum + (Number(item.amountSpent) || 0),
+        0
+      );
+      updatedData.remainingBalance = Number(value || 0) - totalSpent;
+      updatedData.requestMoreFunds = updatedData.remainingBalance < Number(value) * 0.1;
+    }
+
+    setFormData(updatedData);
   };
 
-  // Update a single item
+  // Update expenditure items and recalc balance
   const handleItemChange = (index, field, value) => {
     const newItems = [...formData.items];
     newItems[index][field] = field === "amountSpent" ? Number(value) : value;
 
-    const totalSpent = newItems.reduce(
-      (sum, item) => sum + (Number(item.amountSpent) || 0),
-      0
-    );
-
+    const totalSpent = newItems.reduce((sum, item) => sum + (Number(item.amountSpent) || 0), 0);
     const allocated = Number(formData.allocatedAmount) || 0;
 
     setFormData((prev) => ({
@@ -41,7 +50,6 @@ const VolunteerReport = () => {
     }));
   };
 
-  // Add a new item
   const addItem = () => {
     setFormData((prev) => ({
       ...prev,
@@ -49,16 +57,11 @@ const VolunteerReport = () => {
     }));
   };
 
-  // Remove an item
   const removeItem = (index) => {
     const newItems = [...formData.items];
     newItems.splice(index, 1);
 
-    const totalSpent = newItems.reduce(
-      (sum, item) => sum + (Number(item.amountSpent) || 0),
-      0
-    );
-
+    const totalSpent = newItems.reduce((sum, item) => sum + (Number(item.amountSpent) || 0), 0);
     const allocated = Number(formData.allocatedAmount) || 0;
 
     setFormData((prev) => ({
@@ -72,8 +75,16 @@ const VolunteerReport = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!token) {
+      setMessage("You must be logged in to submit a report");
+      return;
+    }
+
     try {
-      const res = await fetch("http://localhost:5000/api/reports", {
+      console.log("🔑 Token:", token);
+      console.log("📤 Submitting:", formData);
+
+      const res = await fetch("http://localhost:5000/api/volunteer-reports", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +93,18 @@ const VolunteerReport = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      let data;
+
+      try {
+        data = JSON.parse(text);
+      } catch {
+        console.error("⚠️ Non-JSON response:", text);
+        setMessage("Server error (invalid response)");
+        return;
+      }
+
+      console.log("📥 Response:", data);
 
       if (!res.ok) {
         setMessage(data.message || "Failed to submit report");
@@ -104,7 +126,7 @@ const VolunteerReport = () => {
 
       setTimeout(() => setMessage(""), 3000);
     } catch (err) {
-      console.error(err);
+      console.error("❌ Error submitting report:", err);
       setMessage("Server error");
     }
   };
@@ -112,7 +134,6 @@ const VolunteerReport = () => {
   return (
     <div className="report-root">
       <div className="overlay"></div>
-
       <div className="report-container">
         <h1>
           Volunteer <span>Report</span>
@@ -129,7 +150,6 @@ const VolunteerReport = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="text"
             name="disasterArea"
@@ -138,7 +158,6 @@ const VolunteerReport = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="date"
             name="date"
@@ -146,7 +165,6 @@ const VolunteerReport = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="number"
             name="allocatedAmount"
@@ -156,33 +174,24 @@ const VolunteerReport = () => {
             required
           />
 
-          {/* Dynamic items list */}
           {formData.items.map((item, index) => (
             <div key={index} className="item-row">
               <input
                 type="text"
                 placeholder="Reason"
                 value={item.reason}
-                onChange={(e) =>
-                  handleItemChange(index, "reason", e.target.value)
-                }
+                onChange={(e) => handleItemChange(index, "reason", e.target.value)}
                 required
               />
               <input
                 type="number"
                 placeholder="Amount Spent"
                 value={item.amountSpent}
-                onChange={(e) =>
-                  handleItemChange(index, "amountSpent", e.target.value)
-                }
+                onChange={(e) => handleItemChange(index, "amountSpent", e.target.value)}
                 required
               />
               {formData.items.length > 1 && (
-                <button
-                  type="button"
-                  className="remove-item-btn"
-                  onClick={() => removeItem(index)}
-                >
+                <button type="button" className="remove-item-btn" onClick={() => removeItem(index)}>
                   ❌
                 </button>
               )}
@@ -197,20 +206,11 @@ const VolunteerReport = () => {
             type="number"
             value={formData.remainingBalance}
             readOnly
-            className={
-              formData.remainingBalance < 0
-                ? "negative-balance"
-                : "positive-balance"
-            }
+            className={formData.remainingBalance < 0 ? "negative-balance" : "positive-balance"}
           />
 
           <label className="checkbox">
-            <input
-              type="checkbox"
-              name="requestMoreFunds"
-              checked={formData.requestMoreFunds}
-              readOnly
-            />
+            <input type="checkbox" checked={formData.requestMoreFunds} readOnly />
             Request Additional Funds
           </label>
 

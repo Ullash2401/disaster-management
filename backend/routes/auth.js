@@ -58,4 +58,19 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// -------------------- GET CURRENT USER --------------------
+router.get("/me/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId).select("-password"); // Exclude password
+    if (!user) return res.json({ success: false, message: "User not found" });
+
+    res.json({ success: true, user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Error fetching user data" });
+  }
+});
+
 module.exports = router;
