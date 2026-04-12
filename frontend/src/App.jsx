@@ -21,12 +21,18 @@ import Settings from "./pages/Settings";
 import MakeReports from "./pages/MakeReports";
 import AssignAuthority from "./pages/AssignAuthority";
 import AssignDonation from "./pages/AssignDonation";
-import VolunteerReport from "./pages/VolunteerReport"; // ✅ NEW IMPORT
+import VolunteerReport from "./pages/VolunteerReport";
+
+// 🌱 Carbon Component
+import CarbonFootprintDisplay from "./components/CarbonFootprintDisplay";
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+
+      {/* 🌱 GLOBAL CARBON DISPLAY */}
+      <CarbonFootprintDisplay />
 
       <Routes>
         {/* ===== PUBLIC ROUTES ===== */}
@@ -41,7 +47,7 @@ function App() {
         <Route path="/donate-intro" element={<DonateIntro />} />
         <Route path="/donate" element={<Donate />} />
 
-        {/* Optional: protect settings if needed */}
+        {/* Optional protected route */}
         <Route
           path="/settings"
           element={
@@ -88,7 +94,6 @@ function App() {
           }
         />
 
-        {/* ✅ NEW: Volunteer Report Route */}
         <Route
           path="/volunteer-report"
           element={

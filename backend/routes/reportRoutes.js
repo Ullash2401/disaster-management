@@ -44,7 +44,7 @@ router.post("/add", protect, async (req, res) => {
 });
 
 // -------------------- GET ALL REPORTS --------------------
-router.get("/", protect, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const reports = await Report.find()
       .populate("user", "name email role") // optional: include user info

@@ -51,18 +51,35 @@
   background: rgba(0, 255, 128, 0.1);
 }
 
-/* Role select dropdown */
+/* ---------- ROLE SELECT DROPDOWN (FIXED) ---------- */
 .user-table select {
-  @apply px-3 py-1 rounded-lg bg-white/20 text-white font-semibold outline-none;
+  @apply px-3 py-1 rounded-lg font-semibold outline-none;
+  background: rgba(16, 185, 129, 0.9); /* emerald solid */
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(8px);
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
+/* Hover effect */
 .user-table select:hover {
-  @apply bg-white/30;
+  background: rgba(5, 150, 105, 1); /* darker emerald */
 }
 
-/* Note / Instructions */
+/* Focus effect */
+.user-table select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.6);
+}
+
+/* Dropdown options (CRUCIAL FIX) */
+.user-table select option {
+  background: #ffffff; /* white background */
+  color: #000000;       /* black text */
+}
+
+/* ---------- NOTE / INSTRUCTIONS ---------- */
 .note {
   @apply mt-4 text-sm text-gray-300 italic text-center;
 }

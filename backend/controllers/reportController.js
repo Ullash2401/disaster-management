@@ -1,4 +1,5 @@
 const Report = require("../models/Report");
+const sendEmail = require("../utils/sendEmail");
 
 exports.addReport = async (req, res) => {
   try {
@@ -46,6 +47,27 @@ exports.addReport = async (req, res) => {
 
     await report.save();
 
+    await sendEmail({
+      to: "atikullash085@gmail.com",
+      subject: "🚨 New Report Submitted",
+      text: `A new report has been created.
+
+      Title: ${title}
+      Severity: ${severity}
+      Location: ${location || "Not provided"}
+      Date: ${date || new Date()}
+
+      Please check the dashboard for details.`,
+        html: `
+          <h2>🚨 New Report Submitted</h2>
+          <p><strong>Title:</strong> ${title}</p>
+          <p><strong>Severity:</strong> ${severity}</p>
+          <p><strong>Location:</strong> ${location || "Not provided"}</p>
+          <p><strong>Date:</strong> ${date || new Date()}</p>
+          <hr/>
+          <p>Please check the admin dashboard for full details.</p>
+        `
+    });
     res.status(201).json({
       message: "Report created successfully",
       report

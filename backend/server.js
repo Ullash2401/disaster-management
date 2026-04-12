@@ -3,61 +3,78 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-// -------------------- ROUTES --------------------
+// routes
 const authRoutes = require("./routes/auth");
 const reportRoutes = require("./routes/reportRoutes");
 const adminRoutes = require("./routes/admin");
 const donationRoutes = require("./routes/donationRoutes");
-const volunteerReportRoutes = require("./routes/volunteerReportRoutes"); // ✅ existing
-const accountRoutes = require("./routes/accountRoutes"); // ✅ new account routes
-const { initCategories } = require("./controllers/donationController");
+const volunteerReportRoutes = require("./routes/volunteerReportRoutes");
+const accountRoutes = require("./routes/accountRoutes");
+
+// carbon tracker
+const { carbonTracker, carbonStats } = require("./middleware/carbonTracker");
 
 const app = express();
 
-// -------------------- MIDDLEWARE --------------------
+// ---------------- MIDDLEWARE ----------------
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend URL
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
+
 app.use(express.json());
 
-// -------------------- API ROUTES --------------------
+// 🌱 carbon middleware
+app.use(carbonTracker);
+
+// ---------------- ROUTES ----------------
 app.use("/api/auth", authRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/donations", donationRoutes);
 app.use("/api/volunteer-reports", volunteerReportRoutes);
-app.use("/api/account", accountRoutes); // ✅ account update/delete
+app.use("/api/account", accountRoutes);
 
-// -------------------- MONGODB CONNECTION --------------------
+// ---------------- TEST ROUTE ----------------
+app.get("/api/test-carbon", (req, res) => {
+  const randomSize = Math.floor(Math.random() * 200) + 50;
+
+  const data = Array(randomSize).fill({
+    name: "Test User",
+    email: "test@example.com",
+    message: "Dynamic data " + Math.random(),
+  });
+
+  const responseString = JSON.stringify(data);
+  const bytes = Buffer.byteLength(responseString, "utf8");
+  const co2 = bytes * 0.00000015;
+
+  res.json({
+    data,
+    bytes,
+    co2,
+  });
+});
+
+// 🌱 REAL CARBON STATS API (FIXED)
+app.get("/api/carbon-stats", (req, res) => {
+  res.json(carbonStats);
+});
+
+// ---------------- DB ----------------
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(async () => {
-    console.log("MongoDB Connected");
-
-    // Initialize donation categories if needed
-    await initCategories();
-  })
+  .then(() => console.log("MongoDB Connected"))
   .catch((err) => {
-    console.error("MongoDB connection error:", err.message);
+    console.error(err);
     process.exit(1);
   });
 
-// -------------------- TEST ROUTE --------------------
-app.get("/add-test", async (req, res) => {
-  try {
-    const test = mongoose.connection.db.collection("testCollection");
-    const result = await test.insertOne({ name: "Mahdi", role: "Student" });
-    res.send(result);
-  } catch (err) {
-    res.status(500).send("Error inserting: " + err.message);
-  }
-});
-
-// -------------------- START SERVER --------------------
+// ---------------- START SERVER ----------------
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

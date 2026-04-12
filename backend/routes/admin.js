@@ -7,7 +7,7 @@ const { protect, authorize } = require("../middleware/authMiddleware");
 // Only admin can access
 router.get("/users", protect, authorize("admin"), async (req, res) => {
   try {
-    const users = await User.find().select("-password -resetToken");
+    const users = await User.find({ role: { $ne: "admin" } }).select("-password -resetToken");
     res.json({ users });
   } catch (err) {
     console.error("Error fetching users:", err);

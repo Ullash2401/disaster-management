@@ -7,11 +7,11 @@ const AssignAuthority = () => {
   const [message, setMessage] = useState("");
   const token = localStorage.getItem("token");
 
-  // Fetch all users (admin only)
+  // Fetch users
   useEffect(() => {
     if (!token) return;
 
-    let isMounted = true; // prevent state updates if component unmounts
+    let isMounted = true;
 
     const fetchUsers = async () => {
       try {
@@ -24,7 +24,12 @@ const AssignAuthority = () => {
         if (!res.ok) throw new Error(data.message || "Failed to fetch users");
 
         if (isMounted) {
-          setUsers(data.users);
+          // 🔥 FILTER OUT ADMINS HERE (frontend safety)
+          const filteredUsers = data.users.filter(
+            (user) => user.role !== "admin"
+          );
+
+          setUsers(filteredUsers);
           setLoading(false);
         }
       } catch (err) {
@@ -38,20 +43,25 @@ const AssignAuthority = () => {
 
     fetchUsers();
 
-    return () => { isMounted = false }; // cleanup
+    return () => {
+      isMounted = false;
+    };
   }, [token]);
 
-  // Update user role
+  // Update role
   const handleRoleChange = async (userId, newRole) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${userId}/role`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ role: newRole }),
-      });
+      const res = await fetch(
+        `http://localhost:5000/api/admin/users/${userId}/role`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ role: newRole }),
+        }
+      );
 
       const data = await res.json();
 
@@ -60,7 +70,6 @@ const AssignAuthority = () => {
         return;
       }
 
-      // Update local state without re-fetching
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user._id === userId ? { ...user, role: newRole } : user
@@ -77,10 +86,10 @@ const AssignAuthority = () => {
   };
 
   return (
-    <div className="home-root">
-      <div className="overlay"></div>
+    <div className="assign-authority-root">
+      <div className="assign-overlay"></div>
 
-      <div className="content">
+      <div className="assign-content">
         <h1>
           Assign <span>Authority</span>
         </h1>
@@ -93,7 +102,7 @@ const AssignAuthority = () => {
         ) : users.length === 0 ? (
           <p>No users found.</p>
         ) : (
-          <table className="users-table">
+          <table className="user-table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -111,11 +120,14 @@ const AssignAuthority = () => {
                   <td>
                     <select
                       value={user.role}
-                      onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                      onChange={(e) =>
+                        handleRoleChange(user._id, e.target.value)
+                      }
                     >
-                      <option value="admin">Admin</option>
-                      <option value="scriptwriter">Scriptwriter</option>
+                      {/* 🔥 FIXED OPTIONS */}
                       <option value="viewer">Viewer</option>
+                      <option value="volunteer">Volunteer</option>
+                      <option value="scriptwriter">Scriptwriter</option>
                     </select>
                   </td>
                 </tr>
@@ -123,6 +135,10 @@ const AssignAuthority = () => {
             </tbody>
           </table>
         )}
+
+        <p className="note">
+          Note: Admin accounts are hidden for security reasons.
+        </p>
       </div>
     </div>
   );
