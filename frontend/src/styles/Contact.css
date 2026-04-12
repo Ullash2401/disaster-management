@@ -1,0 +1,103 @@
+.contact-root {
+  position: relative;
+  min-height: 100vh;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.contact-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.contact-container {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: auto;
+  padding: 4rem 1.5rem;
+}
+
+.contact-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 3rem;
+}
+
+/* Glass bubble */
+.chat-bubble {
+  background: rgba(255, 255, 255, 0.75); /* semi-transparent */
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  backdrop-filter: blur(10px); /* optional: glassy effect */
+}
+
+.contact-bubble h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #065f46;
+}
+
+.contact-item {
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.contact-item:last-child {
+  border-bottom: none;
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.contact-area {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0.3rem 0;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-right: 1rem;
+  color: #065f46;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-link:hover {
+  text-decoration: underline;
+}
+
+/* Icons */
+.contact-icon {
+  font-size: 1.3rem;
+}
+
+.fire {
+  color: #dc2626;
+}
+
+.medical {
+  color: #2563eb;
+}
+
+.police {
+  color: #1f2937;
+}
+
+.volunteer {
+  color: #16a34a;
+}

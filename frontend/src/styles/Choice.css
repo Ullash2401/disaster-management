@@ -1,0 +1,72 @@
+/* Background image */
+.choice-page {
+  @apply relative min-h-screen flex items-center justify-center text-white overflow-hidden;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Brighter overlay */
+.choice-overlay {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    135deg,
+    rgba(6, 78, 59, 0.6),   /* less opacity → brighter */
+    rgba(15, 23, 42, 0.5)   /* less dark → more visible background */
+  );
+}
+
+/* SINGLE glass chat bubble */
+.choice-card {
+  @apply relative z-10 max-w-xl w-full
+         px-12 py-14 rounded-3xl text-center
+         bg-white/10 backdrop-blur-xl
+         shadow-[0_30px_80px_rgba(0,0,0,0.45)]
+         border border-white/20;
+}
+
+/* Title */
+.choice-card h1 {
+  @apply text-4xl font-extrabold mb-2;
+}
+
+.choice-card p {
+  @apply text-slate-200 mb-10;
+}
+
+/* Options layout */
+.choice-options {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+/* Option buttons / links */
+.choice-option {
+  @apply flex flex-col items-center justify-center
+         px-6 py-8 rounded-2xl
+         bg-white/10 border border-white/20
+         text-white cursor-pointer
+         transition-all duration-300;
+}
+
+.choice-option:hover {
+  @apply bg-white/20 -translate-y-1 shadow-lg;
+}
+
+/* Icon */
+.choice-option .icon {
+  @apply text-3xl mb-4;
+}
+
+/* Titles */
+.choice-option h3 {
+  @apply text-lg font-semibold mb-1;
+}
+
+.choice-option span {
+  @apply text-sm text-slate-200;
+}
+
+/* Login highlight */
+.choice-option.login {
+  @apply border-emerald-400;
+}

@@ -1,0 +1,63 @@
+/* Background image */
+.about-root {
+  @apply relative min-h-screen flex items-center justify-center text-white overflow-hidden;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+
+  z-index: 0; /* Ensure root stays behind dropdown */
+}
+
+/* Dark overlay */
+.about-overlay {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    135deg,
+    rgba(6, 78, 59, 0.85),
+    rgba(15, 23, 42, 0.9)
+  );
+  z-index: 0; /* Keep overlay behind navbar dropdown */
+}
+
+/* Glass container for content */
+.about-container {
+  @apply relative max-w-5xl w-full px-12 py-16
+         rounded-3xl bg-white/10 backdrop-blur-xl
+         shadow-[0_30px_80px_rgba(0,0,0,0.45)]
+         border border-white/20 overflow-y-auto;
+
+  max-height: 85vh; /* scrollable like chat bubble */
+  z-index: 10;      /* higher than overlay, still below navbar dropdown */
+}
+
+/* Title */
+.about-container h1 {
+  @apply text-4xl md:text-5xl font-extrabold text-center mb-10;
+}
+
+/* Headings */
+.about-container h2 {
+  @apply text-2xl font-semibold text-emerald-300 mt-10 mb-3;
+}
+
+.about-container h3 {
+  @apply text-xl font-semibold text-emerald-200 mt-6 mb-2;
+}
+
+/* Text */
+.about-container p {
+  @apply text-slate-200 leading-relaxed;
+}
+
+.about-container ul {
+  @apply list-disc list-inside text-slate-200 space-y-2;
+}
+
+/* Scrollbar (optional polish) */
+.about-container::-webkit-scrollbar {
+  width: 6px;
+}
+.about-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}

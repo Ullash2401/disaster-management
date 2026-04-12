@@ -1,0 +1,66 @@
+/* Root with background */
+.forgot-root {
+  @apply relative min-h-screen flex items-center justify-center text-white;
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Overlay matching Home page brightness */
+.forgot-overlay {
+  @apply absolute inset-0 bg-emerald-900/60;
+}
+
+/* Glass card */
+.forgot-card {
+  @apply relative z-10 w-full max-w-md
+         px-10 py-12 rounded-3xl
+         bg-white/10 backdrop-blur-lg
+         shadow-2xl text-center;
+}
+
+/* Title */
+.forgot-title {
+  @apply text-5xl font-extrabold text-white mb-8;
+}
+
+/* Error & Success messages */
+.forgot-error {
+  @apply text-red-500 text-sm mb-4;
+}
+.forgot-message {
+  @apply text-green-400 text-sm mb-4;
+}
+
+/* Input wrapper */
+.forgot-input-wrapper {
+  @apply relative mb-4;
+}
+
+/* Icon */
+.forgot-icon {
+  @apply absolute left-3 top-3 text-gray-300; /* darker for visibility */
+}
+
+/* Input */
+.forgot-input {
+  @apply w-full pl-10 p-3 rounded-xl
+         bg-white/20 text-white placeholder-white/80
+         border border-white/30
+         focus:outline-none focus:ring-2 focus:ring-emerald-400;
+}
+
+/* Submit button */
+.forgot-btn {
+  @apply w-full bg-emerald-500 hover:bg-emerald-400
+         py-3 rounded-xl font-semibold text-white
+         transition-all mb-4;
+}
+
+/* Footer */
+.forgot-footer {
+  @apply text-sm text-white/80 mt-2;
+}
+.forgot-link {
+  @apply text-emerald-300 font-medium hover:underline;
+}

@@ -1,0 +1,191 @@
+/* AssignDonation.css */
+
+/* Root + background */
+.assign-root {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px 20px;
+  overflow-y: auto;
+
+  background-image: url("../assets/nature.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  z-index: 0;
+}
+
+/* Dark overlay */
+.assign-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(6, 78, 59, 0.85),
+    rgba(15, 23, 42, 0.9)
+  );
+  z-index: 0;
+}
+
+/* Glass container */
+.assign-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  padding: 40px;
+  overflow-y: auto;
+}
+
+/* Titles */
+.assign-container h1 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.assign-container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #34d399;
+  margin: 25px 0 10px;
+}
+
+/* Messages */
+.message {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Category selector */
+.category-select {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-select label {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.category-select select {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 16px;
+  appearance: none;
+}
+
+/* Users section */
+.users {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inputs label {
+  font-weight: 500;
+}
+
+.inputs input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 14px;
+}
+
+.inputs input::placeholder {
+  color: #ddd;
+}
+
+/* Assign button */
+.user-card button {
+  align-self: flex-start;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  background: #10b981;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user-card button:hover {
+  background: #059669;
+}
+
+/* Scrollbar for container */
+.assign-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.assign-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.assign-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.assign-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .assign-container {
+    padding: 25px;
+  }
+
+  .inputs {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-card button {
+    width: 100%;
+  }
+}
