@@ -99,10 +99,6 @@ function Navbar() {
                   <Link to="/dashboard">Dashboard</Link>
                 )}
 
-                {currentPath !== "/settings" && (
-                  <Link to="/settings">Settings</Link>
-                )}
-
                 {currentPath !== "/make-reports" && (
                   <Link to="/make-reports">Make Reports</Link>
                 )}

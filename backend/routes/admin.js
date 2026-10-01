@@ -19,7 +19,7 @@ router.get("/users", protect, authorize("admin"), async (req, res) => {
 // Only admin can assign roles
 router.put("/users/:id/role", protect, authorize("admin"), async (req, res) => {
   const { role } = req.body;
-  const allowedRoles = ["admin", "scriptwriter", "viewer"];
+  const allowedRoles = ["volunteer", "scriptwriter", "viewer"];
 
   // Check for valid role
   if (!allowedRoles.includes(role)) {

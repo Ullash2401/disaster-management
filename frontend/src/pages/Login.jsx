@@ -100,12 +100,7 @@ const Login = () => {
           Sign Up
         </Link>
 
-        <p className="forgot-password">
-          Forgot your password?{" "}
-          <Link to="/forgot" className="forgot-link">
-            Reset here
-          </Link>
-        </p>
+        
       </form>
     </div>
   );
